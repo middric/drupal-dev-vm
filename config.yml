@@ -4,16 +4,9 @@
 # version inside the drupal.make file if you change the major version here.
 drupal_major_version: 7
 
-# The path where Drupal will be downloaded and installed.
+# Drupal config
 drupal_core_path: "/var/www/drupal"
-
 drupal_domain: "local.store.bbc.com"
-drupal_site_name: "BBC Store"
-drupal_install_profile: standard
-
-# TODO - REMOVE THIS VARIABLE AFTER ANSIBLE 1.8.3+
-drush_keep_updated: yes
-
 drupal_mysql_user: drupal
 drupal_mysql_password: password
 drupal_mysql_database: bbcstore_com
@@ -37,7 +30,6 @@ vagrant_cpus: 2
 
 # Other variables in this file will be used during Ansible provisioning.
 mysql_root_password: root
-drush_version: master
 
 # Comment out any extra utilities you don't want to install.
 installed_extras:
