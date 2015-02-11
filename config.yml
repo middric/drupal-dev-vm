@@ -21,7 +21,7 @@ drupal_database_dump: dump.sql.gz
 
 # Vagrant hostname and IP configuration.
 vagrant_hostname: local.store.bbc.com
-vagrant_ip: 192.168.88.88
+vagrant_ip:
 
 # A list of synced folders, with the keys 'local_path', 'destination', and 'id'.
 vagrant_synced_folders:

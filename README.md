@@ -38,13 +38,14 @@ Note for Windows users: *Ansible will be installed inside the VM, and everything
   3. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
   4. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
   5. Get hold of a database dump and place it in the provisioning folder with a filename `dump.sql.gz`
+  6. Edit `config.yml` and set the `vagrant_ip` to a unique IP address for your network
   6. Type in `vagrant up`, and let Vagrant do its magic.
 
 Note: *If there are any errors during the course of running `vagrant up`, and it drops you back to your command prompt, just run `vagrant provision` to continue building the VM from where you left off. If there are still errors after doing this a few times, post an issue to this project's issue queue on GitHub with the error.*
 
 ### 3 - Configure your host machine to access the VM.
 
-  1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  local.store.bbc.com` so you can connect to the VM.
+  1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), and point the static ip you assigned to vagrant_ip to local.store.bbc.com.
   2. Open your browser and access [http://local.store.bbc.com](http://local.store.bbc.com).
 
 ### 4 - Configure solr
