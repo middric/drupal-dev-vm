@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<solr sharedLib="lib" persistent="true">
+  <cores adminPath="/admin/cores" defaultCoreName="core0">
+    <core name="bbcstore" instanceDir="/opt/solr/bbcstore/"/>
+  </cores>
+</solr>

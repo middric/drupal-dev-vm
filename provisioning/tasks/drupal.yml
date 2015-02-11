@@ -2,6 +2,15 @@
 - name: Create Drupal database.
   mysql_db: "db={{ drupal_mysql_database }} state=present"
 
+- name: Create Drupal database user.
+  mysql_user: "name={{ drupal_mysql_user }} password={{ drupal_mysql_password }} priv=*.*:ALL state=present"
+
+- name: Copy database dump.
+  copy: "src={{ drupal_database_dump }} dest=/tmp"
+
+- name: Import database.
+  mysql_db: "name={{ drupal_mysql_database }} state=import target=/tmp/{{ drupal_database_dump }}"
+
 - name: Remove default virtualhost file.
   file:
     path: /etc/apache2/sites-enabled/000-default.conf
@@ -12,47 +21,6 @@
   stat: "path={{ drupal_core_path }}"
   register: drupal_site
 
-- name: Generate Drupal site with drush makefile.
-  command: "drush make -y /vagrant/drupal.make.yml {{ drupal_core_path }}"
-  when: drupal_site.stat.exists == false
-  sudo: no
-
-- name: Install Drupal (standard profile) with drush.
-  command: >
-    drush si {{ drupal_install_profile | default('standard') }} -y
-    --site-name="{{ drupal_site_name }}"
-    --account-name=admin
-    --account-pass=admin
-    --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ drupal_mysql_database }}
-    chdir={{ drupal_core_path }}
-  notify: restart webserver
-  when: drupal_site.stat.exists == false
-  sudo: no
-
-- name: Install modules with drush.
-  command: >
-    drush en -y devel
-    chdir={{ drupal_core_path }}
-  when: drupal_site.stat.exists == false
-  sudo: no
-
-- name: Set the custom module directory path for Drupal < 8.
-  set_fact:
-    drupal_custom_modules_path: "{{ drupal_core_path }}/sites/all/modules/custom"
-  when: drupal_major_version|int < 8
-
-- name: Set the custom module directory path for Drupal = 8.
-  set_fact:
-    drupal_custom_modules_path: "{{ drupal_core_path }}/modules/custom"
-  when: drupal_major_version|int == 8
-
-- name: Symlink custom modules directory into place.
-  file:
-    src: /vagrant/custom_modules
-    dest: "{{ drupal_custom_modules_path }}"
-    state: link
-  sudo: no
-
 - name: Update ownership of all files within drupal_core_path.
   file:
     path: "{{ drupal_core_path }}"
@@ -60,3 +28,26 @@
     group: www-data
     mode: 0775
     recurse: yes
+
+- name: Create bbcstore Solr directory.
+  file:
+    path: "/opt/solr/bbcstore"
+    state: "directory"
+
+- name: Create bbcstore/data Solr directory.
+  file:
+    path: "/opt/solr/bbcstore/data"
+    state: "directory"
+
+- name: Set correct permissions on Solr directories.
+  command: "chown tomcat6:tomcat6 /opt/solr/bbcstore/data/ -R"
+
+- name: Copy Solr config from Drupal.
+  command: "cp -r {{ drupal_core_path }}/sites/all/modules/contrib/search_api_solr/solr-conf/4.x /opt/solr/bbcstore/conf"
+
+- name: Move solr.xml config to remote.
+  copy:
+    src: "solr.xml"
+    dest: "/opt/solr"
+    owner: tomcat6
+    group: tomcat6
