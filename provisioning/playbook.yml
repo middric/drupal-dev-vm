@@ -46,3 +46,4 @@
   tasks:
     - include: tasks/www.yml
     - include: tasks/drupal.yml
+    - include: tasks/solr.yml

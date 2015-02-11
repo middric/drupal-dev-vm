@@ -17,10 +17,6 @@
     state: absent
   notify: restart webserver
 
-- name: Check if Drupal is already set up.
-  stat: "path={{ drupal_core_path }}"
-  register: drupal_site
-
 - name: Update ownership of all files within drupal_core_path.
   file:
     path: "{{ drupal_core_path }}"
@@ -28,26 +24,3 @@
     group: www-data
     mode: 0775
     recurse: yes
-
-- name: Create bbcstore Solr directory.
-  file:
-    path: "/opt/solr/bbcstore"
-    state: "directory"
-
-- name: Create bbcstore/data Solr directory.
-  file:
-    path: "/opt/solr/bbcstore/data"
-    state: "directory"
-
-- name: Set correct permissions on Solr directories.
-  command: "chown tomcat6:tomcat6 /opt/solr/bbcstore/data/ -R"
-
-- name: Copy Solr config from Drupal.
-  command: "cp -r {{ drupal_core_path }}/sites/all/modules/contrib/search_api_solr/solr-conf/4.x /opt/solr/bbcstore/conf"
-
-- name: Move solr.xml config to remote.
-  copy:
-    src: "solr.xml"
-    dest: "/opt/solr"
-    owner: tomcat6
-    group: tomcat6

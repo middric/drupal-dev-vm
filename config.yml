@@ -4,7 +4,7 @@
 # version inside the drupal.make file if you change the major version here.
 drupal_major_version: 7
 
-# Drupal config
+# The path where Drupal will be downloaded and installed.
 drupal_core_path: "/var/www/drupal"
 drupal_domain: "local.store.bbc.com"
 drupal_mysql_user: drupal
@@ -14,7 +14,7 @@ drupal_database_dump: dump.sql.gz
 
 # Vagrant hostname and IP configuration.
 vagrant_hostname: local.store.bbc.com
-vagrant_ip:
+vagrant_ip: 
 
 # A list of synced folders, with the keys 'local_path', 'destination', and 'id'.
 vagrant_synced_folders:
@@ -30,6 +30,10 @@ vagrant_cpus: 2
 
 # Other variables in this file will be used during Ansible provisioning.
 mysql_root_password: root
+
+# TODO - REMOVE THIS VARIABLE AFTER ANSIBLE 1.8.3+
+drush_keep_updated: yes
+drush_version: master
 
 # Comment out any extra utilities you don't want to install.
 installed_extras:
