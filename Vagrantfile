@@ -4,9 +4,10 @@ VAGRANTFILE_API_VERSION = "2"
 
 # Use config.yml for basic VM configuration.
 require 'yaml'
-if !File.exist?('./config.yml')
-  raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
+if !File.exist?('./local.config.yml')
+  raise 'Configuration file not found! Please create a local-config.yml file.'
 end
+lconfig = YAML::load_file("./local.config.yml")
 vconfig = YAML::load_file("./config.yml")
 
 # Use rbconfig to determine if we're on a windows host or not.
@@ -15,12 +16,12 @@ is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = vconfig['vagrant_hostname']
-  config.vm.network :private_network, ip: vconfig['vagrant_ip']
+  config.vm.network :private_network, ip: lconfig['vagrant_ip']
   config.ssh.insert_key = false
 
   config.vm.box = "geerlingguy/ubuntu1404"
 
-  for synced_folder in vconfig['vagrant_synced_folders'];
+  for synced_folder in lconfig['vagrant_synced_folders'];
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
       type: synced_folder['type'],
       rsync__auto: "true",

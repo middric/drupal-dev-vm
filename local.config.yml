@@ -1,0 +1,9 @@
+---
+
+vagrant_ip: {{ unique_ip_address }}
+vagrant_synced_folders:
+  - local_path: {{ drupal_docroot_directory }}
+    destination: /var/www/drupal
+    excluded_paths: [".git/"]
+    id: drupal
+    type: rsync

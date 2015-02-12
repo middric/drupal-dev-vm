@@ -13,16 +13,7 @@ drupal_mysql_database: bbcstore_com
 drupal_database_dump: dump.sql.gz
 
 # Vagrant hostname and IP configuration.
-vagrant_hostname: local.store.bbc.com
-vagrant_ip: 
-
-# A list of synced folders, with the keys 'local_path', 'destination', and 'id'.
-vagrant_synced_folders:
-  - local_path: ~/workspace/store/docroot
-    destination: /var/www/drupal
-    excluded_paths: [".git/"]
-    id: drupal
-    type: rsync
+vagrant_hostname: BBCStore
 
 # Memory and CPU to use for this VM.
 vagrant_memory: 1024
