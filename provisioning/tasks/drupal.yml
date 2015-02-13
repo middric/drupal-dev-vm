@@ -6,10 +6,10 @@
   mysql_user: "name={{ drupal_mysql_user }} password={{ drupal_mysql_password }} priv=*.*:ALL state=present"
 
 - name: Copy database dump.
-  copy: "src={{ drupal_database_dump }} dest=/tmp"
+  copy: "src={{ database_dump }} dest=/tmp/database_dump.sql.gz"
 
 - name: Import database.
-  mysql_db: "name={{ drupal_mysql_database }} state=import target=/tmp/{{ drupal_database_dump }}"
+  mysql_db: "name={{ drupal_mysql_database }} state=import target=/tmp/database_dump.sql.gz"
 
 - name: Remove default virtualhost file.
   file:

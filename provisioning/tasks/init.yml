@@ -26,3 +26,6 @@
     regexp: "^127.0.0.1  {{ drupal_domain }}$"
     line: "127.0.0.1  {{ drupal_domain }}"
     state: present
+
+- name: Generate self-signed SSL cert
+  command: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=UK/ST=/L=London/O=BBCW/CN=local.store.bbc.com" -keyout /home/vagrant/certificate.key -out /home/vagrant/certificate.crt

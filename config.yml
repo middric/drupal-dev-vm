@@ -10,10 +10,15 @@ drupal_domain: "local.store.bbc.com"
 drupal_mysql_user: drupal
 drupal_mysql_password: password
 drupal_mysql_database: bbcstore_com
-drupal_database_dump: dump.sql.gz
 
 # Vagrant hostname and IP configuration.
 vagrant_hostname: BBCStore
+
+vagrant_synced_folders:
+  - destination: /var/www/drupal
+    excluded_paths: [".git/"]
+    id: drupal
+    type: rsync
 
 # Memory and CPU to use for this VM.
 vagrant_memory: 1024
@@ -47,6 +52,14 @@ apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
   - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
 
+apache_vhosts_ssl:
+  - {
+    servername: "{{ drupal_domain }}",
+    documentroot: "{{ drupal_core_path }}",
+    certificate_file: "/home/vagrant/certificate.crt",
+    certificate_key_file: "/home/vagrant/certificate.key"
+  }
+
 php_memory_limit: "256M"
 php_display_errors: "On"
 php_realpath_cache_size: "1024K"
@@ -54,4 +67,4 @@ php_sendmail_path: "/usr/sbin/ssmtp -t"
 
 # Disable main XDebug components unless needed.
 php_xdebug_coverage_enable: 0
-php_xdebug_default_enable: 0
+php_xdebug_default_enable: 1

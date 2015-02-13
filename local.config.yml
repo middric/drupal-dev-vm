@@ -1,9 +1,10 @@
 ---
 
-vagrant_ip: {{ unique_ip_address }}
-vagrant_synced_folders:
-  - local_path: {{ drupal_docroot_directory }}
-    destination: /var/www/drupal
-    excluded_paths: [".git/"]
-    id: drupal
-    type: rsync
+# Unique IP address for your VM
+vagrant_ip:
+
+# The directory containing your Drupal project
+synced_folder:
+
+# The location of your Drupal database dump
+database_dump: 
