@@ -42,7 +42,7 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 ### 3 - Configure your host machine to access the VM.
 
   1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), and point the static ip you assigned to vagrant_ip to local.store.bbc.com.
-  2. Open your browser and access [http://local.store.bbc.com](http://local.store.bbc.com).
+  2. Open your browser and access [https://local.store.bbc.com](https://local.store.bbc.com).
 
 ### 4 - Keep it in sync
 
@@ -51,12 +51,12 @@ Files are kept in sync with a vagrant rsync file share. To start sharing run `va
 ### 5 - Configure solr
 
   1. Login to the site with an admin account
-  2. Navigate to [http://local.store.bbc.com/admin/config/search/search_api](http://local.store.bbc.com/admin/config/search/search_api) and hit the "Add server" button
+  2. Navigate to [https://local.store.bbc.com/admin/config/search/search_api](https://local.store.bbc.com/admin/config/search/search_api) and hit the "Add server" button
   3. Server name can be anything
   4. Service class should be "Solr service"
   5. Set Solr Path to "/solr/bbcstore"
   6. Save.
-  7. Navigate back to [http://local.store.bbc.com/admin/config/search/search_api](http://local.store.bbc.com/admin/config/search/search_api)
+  7. Navigate back to [https://local.store.bbc.com/admin/config/search/search_api](https://local.store.bbc.com/admin/config/search/search_api)
   8. Click edit next to "BBC Store Index"
   9. Set "Server" to the server name you defined in step 3.
   10. Save.
